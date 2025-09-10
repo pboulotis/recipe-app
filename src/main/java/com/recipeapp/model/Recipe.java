@@ -19,27 +19,26 @@ public class Recipe {
     private List<Ingredient> ingredients;
 
     private String description;
-    private String category;
     private Integer prepTime;
 
+    @Lob
     @Column(columnDefinition = "TEXT")
     private String procedure;
 
-    @ElementCollection
-    private List<String> tags;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     public Recipe() {
 
     }
 
-    public Recipe(String name, String description, List<Ingredient> ingredients, String category, Integer prepTime, String procedure, List<String> tags) {
+    public Recipe(String name, String description, List<Ingredient> ingredients, Integer prepTime, String procedure, Category category) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
-        this.category = category;
         this.prepTime = prepTime;
         this.procedure = procedure;
-        this.tags = tags;
+        this.category = category;
     }
 
     public Long getId() {
@@ -74,14 +73,6 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public Integer getPrepTime() {
         return prepTime;
     }
@@ -98,11 +89,12 @@ public class Recipe {
         this.procedure = procedure;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
+

@@ -8,16 +8,18 @@ import java.util.Objects;
 public class Ingredient {
 
     private String name;
-    private double quantity;
-    private String unit;
-    private boolean optional;
+    private String measurement;
+    private boolean optional = false;
 
-    public Ingredient() {}
+    public Ingredient() {
+    }
 
-    public Ingredient(String name, double quantity, String unit, boolean optional) {
+    public Ingredient(String name) {
+    }
+
+    public Ingredient(String name, String measurement, boolean optional) {
         this.name = name;
-        this.quantity = quantity;
-        this.unit = unit;
+        this.measurement = measurement;
         this.optional = optional;
     }
 
@@ -29,20 +31,12 @@ public class Ingredient {
         this.name = name;
     }
 
-    public double getQuantity() {
-        return quantity;
+    public String getMeasurement() {
+        return measurement;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
     }
 
     public boolean isOptional() {
@@ -57,14 +51,12 @@ public class Ingredient {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Double.compare(quantity, that.quantity) == 0
-                && optional == that.optional
-                && Objects.equals(name, that.name)
-                && Objects.equals(unit, that.unit);
+        return optional == that.optional && Objects.equals(name, that.name) && Objects.equals(measurement, that.measurement);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, quantity, unit, optional);
+        return Objects.hash(name, measurement, optional);
     }
 }
+

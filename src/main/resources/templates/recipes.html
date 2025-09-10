@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script th:src="@{/js/recipes.js}" defer></script>
+</head>
+<body>
+<header>
+    <h1>🍴 Recipe Management App</h1>
+    <nav>
+        <a th:href="@{/recipes}">All Recipes</a> |
+        <a th:href="@{/recipes/new}">Add Recipe</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>All Recipes</h2>
+    <ul>
+        <li th:each="recipe : ${recipes}">
+            <button type="button" class="collapsible" th:text="${recipe.name}"></button>
+            <div class="content">
+                <div class="columns">
+                    <div>
+                        <h4>Ingredients</h4>
+                        <ul>
+                            <li th:each="ingredient : ${recipe.ingredients}"
+                                th:text="${ingredient.name} + ' ' + ${ingredient.measurement}"></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <p><b>Category:</b> <span th:text="${recipe.category.displayName}"></span></p>
+                        <p th:if="${recipe.prepTime != null}">
+                            <b>Prep time:</b> <span th:text="${recipe.prepTime} + ' min'"></span>
+                        </p>
+                        <p th:if="${recipe.procedure != null}">
+                            <b>Procedure:</b> <span th:text="${recipe.procedure}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<footer>
+    <p>&copy; 2025 Recipe Management App</p>
+</footer>
+</body>
+</html>

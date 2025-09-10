@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script th:src="@{/js/recipes.js}" defer></script>
+</head>
+<body>
+<header>
+    <h1>🍴 Recipe Management App</h1>
+    <nav>
+        <a th:href="@{/recipes}">All Recipes</a> |
+        <a th:href="@{/recipes/new}">Add Recipe</a>
+    </nav>
+</header>
+<h1>Add a New Recipe</h1>
+
+<form action="/recipes" method="post">
+    <label for="name">Recipe Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"><br>
+
+
+    <label for="prepTime">Preparation Time (minutes):</label>
+    <input type="number" id="prepTime" name="prepTime" min="0"><br>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+        <option value="DESSERT">Dessert</option>
+        <option value="BREAKFAST">Breakfast</option>
+        <option value="LUNCH">Lunch</option>
+        <option value="SNACK">Snack</option>
+    </select><br>
+
+    <label for="procedure">Procedure:</label>
+    <textarea id="procedure" name="procedure"></textarea><br>
+
+    <h3>Ingredients</h3>
+    <div id="ingredients">
+        <input type="text" name="ingredients.name" placeholder="Ingredient name" required>
+        <input type="text" name="ingredients.measurement" placeholder="e.g. 2 cups">
+    </div>
+    <button type="button" onclick="addIngredient()">+ Add Ingredient</button><br><br>
+
+    <button type="submit">Save Recipe</button>
+</form>
+
+<footer>
+    <p>&copy; 2025 Recipe Management App</p>
+</footer>
+</body>
+</html>

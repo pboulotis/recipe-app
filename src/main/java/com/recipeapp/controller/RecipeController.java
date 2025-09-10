@@ -1,5 +1,6 @@
 package com.recipeapp.controller;
 
+import com.recipeapp.model.Category;
 import com.recipeapp.model.Ingredient;
 import com.recipeapp.model.Recipe;
 import com.recipeapp.repository.RecipeRepository;
@@ -12,8 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/recipes")
+@RequestMapping("/recipe")
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -62,10 +64,9 @@ public class RecipeController {
                     existingRecipe.setName(newRecipe.getName());
                     existingRecipe.setDescription(newRecipe.getDescription());
                     existingRecipe.setIngredients(newRecipe.getIngredients());
-                    existingRecipe.setCategory(newRecipe.getCategory());
                     existingRecipe.setPrepTime(newRecipe.getPrepTime());
-                    existingRecipe.setTags(newRecipe.getTags());
                     existingRecipe.setProcedure(newRecipe.getProcedure());
+                    existingRecipe.setCategory(newRecipe.getCategory());
                     recipeRepository.save(existingRecipe);
                     return ResponseEntity.ok("Recipe updated successfully!");
                 })
@@ -83,27 +84,14 @@ public class RecipeController {
         }
     }
 
+    @GetMapping("/ingredients/{name}")
+    public List<Recipe> getByIngredient(@PathVariable String name) {
+        return recipeRepository.findByIngredientName(name);
+    }
+
     @GetMapping("/category/{category}")
-    public List<Recipe> getByCategory(@PathVariable String category) {
+    public List<Recipe> getByCategory(@PathVariable Category category) {
         return recipeRepository.findByCategory(category);
     }
 
-    @GetMapping("/tag/{tag}")
-    public List<Recipe> getByTag(@PathVariable String tag) {
-        return recipeRepository.findByTagsContaining(tag);
-    }
-
-    @GetMapping("/ingredient/{ingredient}")
-    public List<Recipe> getByIngredient(@PathVariable String name) {
-        return recipeRepository.findByIngredientsName(name);
-    }
-
-    @GetMapping("/search")
-    public List<Recipe> searchRecipes(
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String tag,
-            @RequestParam(required = false) String ingredient){
-
-        return recipeRepository.searchRecipes(category, tag, ingredient);
-    }
 }
