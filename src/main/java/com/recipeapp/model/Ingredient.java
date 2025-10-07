@@ -15,6 +15,7 @@ public class Ingredient {
     }
 
     public Ingredient(String name) {
+        this.name = name;
     }
 
     public Ingredient(String name, String measurement, boolean optional) {

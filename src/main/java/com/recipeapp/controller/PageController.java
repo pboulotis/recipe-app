@@ -34,4 +34,34 @@ public class PageController {
         model.addAttribute("newRecipe", new Recipe());
         return "new-recipe";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editRecipe(@PathVariable Long id, Model model) {
+        Recipe recipe = recipeRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid recipe Id:" + id));
+        model.addAttribute("recipe", recipe);
+        return "edit-recipe";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateRecipe(@PathVariable Long id, @ModelAttribute Recipe updatedRecipe) {
+        Recipe existingRecipe = recipeRepository.findById(id).
+            orElseThrow(() -> new IllegalArgumentException("Invalid recipe Id:" + id));
+            
+        existingRecipe.setName(updatedRecipe.getName());
+        existingRecipe.setDescription(updatedRecipe.getDescription());
+        existingRecipe.setIngredients(updatedRecipe.getIngredients());
+        existingRecipe.setPrepTime(updatedRecipe.getPrepTime());
+        existingRecipe.setCategory(updatedRecipe.getCategory());
+        existingRecipe.setProcedure(updatedRecipe.getProcedure());
+
+        recipeRepository.save(existingRecipe);
+        return "redirect:/recipes";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteRecipe(@PathVariable Long id) {
+        recipeRepository.deleteById(id);
+        return "redirect:/recipes";
+    }
 }

@@ -21,7 +21,6 @@ public class Recipe {
     private String description;
     private Integer prepTime;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String procedure;
 

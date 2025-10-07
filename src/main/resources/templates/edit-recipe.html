@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Recipe</title>
+    <link rel="icon" type="image/png" href="images/maryse-logo.png">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script th:src="@{/js/recipes.js}" defer></script>
+</head>
+<body style="background-color:#f85e00;">
+    <header class="app-header">
+        <img src="/images/maryse-logo.jpeg" alt="Logo" class="logo">
+        <nav>
+            <a th:href="@{/recipes}">All Recipes</a>
+        </nav>
+    </header>
+<div class="form-container">
+
+<form th:action="@{/recipes/edit/{id}(id=${recipe.id})}" method="post" th:object="${recipe}">
+    <div class="top-row">
+        <div class="form-element">
+            <label for="name">Recipe Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+        </div>
+
+        <div class="form-element">
+            <label for="category">Category:</label>
+            <select id="category" th:field="*{category}">
+                <option value="APPETIZER">Appetizer</option>
+                <option value="BEVERAGE">Beverage</option>
+                <option value="MAINCOURSE">Main Course</option>
+                <option value="DESSERT">Dessert</option>
+            </select>
+        </div>
+
+        <div class="form-element small">
+            <label for="prepTime">Preparation (minutes):</label>
+            <input type="number" id="prepTime" th:field="*{prepTime}" min="0">
+        </div>
+    </div>
+
+    <div class="form-element full">
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}">
+    </div>
+
+    <div class="main-grid">
+        <div class="ingredients">
+            <label>Ingredients:</label>
+            <div id="ingredients-container">
+                <div th:each="ingredient, iterStat : *{ingredients}" class="ingredient-row">
+                    <input type="text"
+                           th:field="*{ingredients[__${iterStat.index}__].name}"
+                           placeholder="Ingredient name">
+                    <input type="text"
+                           th:field="*{ingredients[__${iterStat.index}__].measurement}"
+                           placeholder="Measurement (optional)">
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-ingredient" title="Remove ingredient">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm add-ingredient">
+                <i class="bi bi-plus-circle"></i> Add Ingredient
+            </button>
+        </div>
+
+        <div class="procedure">
+            <label for="procedure">Procedure:</label>
+            <textarea id="procedure" th:field="*{procedure}"></textarea>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle"></i> Save Changes
+        </button>
+    </div>
+</form>
+
+</div>
+
+    <footer>
+        <p>&copy;pboulotis</p>
+    </footer>
+</body>
+</html>
